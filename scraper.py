@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 url = 'https://www.listademaestros.com/fime/buscar'
 
-def scrap(url):
+def scrap(name, url):
     response = requests.get(url)
     if response:
         soup = BeautifulSoup(response.content, 'html.parser')
@@ -25,10 +25,10 @@ def scrap(url):
                 ]
 
         for score in scores:
-            print(score)
+            print(score.contents)
 
         for rate in rates:
-            print(rate)
+            print(rate.span.contents)
 
 def find(name : str):
     if not name:
@@ -43,12 +43,10 @@ def find(name : str):
 
         table = soup.find(id = 'nombres_table')
         for link in table.find_all('a'):
-            href = link['href']
-            maestro = scrap(href)
+            maestro = scrap(link.contents, link['href'])
 
             result.append(maestro)
-            result.append(href)
 
         if len(result) == 0:
             return None
-        return '\n'.join(result)
+        return result
