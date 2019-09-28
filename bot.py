@@ -1,13 +1,14 @@
-import os
-import time
-import sys
+#!/bin/python
 
-import requests
+import os
+import sys
 
 import discord
 from dotenv import load_dotenv
 
 from discord.ext import commands
+
+import scraper
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
@@ -20,19 +21,23 @@ async def on_ready():
 
 @bot.command(name = 'yegua')
 async def command_yegua(ctx, *args):
-    await ctx.send(' '.join(args))
+    found = scraper.find('-'.join(args))
+    if found:
+        await ctx.send(found)
 
 @bot.event
 async def on_command_error(ctx, error):
     print(error)
 
-try:
-    bot.run(token)
-except discord.errors.LoginFailure as e:
-    print('Login failure:', e)
-    sys.exit(1)
-except KeyboardInterrupt:
-    sys.exit()
-except Exception as e:
-    print('Error:', e)
-    sys.exit(1)
+def main():
+    try:
+        bot.run(token)
+    except discord.errors.LoginFailure as e:
+        print('Login failure:', e)
+        sys.exit(1)
+    except Exception as e:
+        print('Error:', e)
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
