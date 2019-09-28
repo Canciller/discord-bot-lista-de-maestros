@@ -1,6 +1,5 @@
 #!/bin/python
 
-import os
 import sys
 
 import discord
@@ -11,8 +10,7 @@ from discord.ext import commands
 import scraper
 
 load_dotenv()
-token = 'TOKEN XD'
-
+token = "DISCORD-TOKEN"
 
 bot = commands.Bot(command_prefix = '!')
 
