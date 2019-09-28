@@ -11,7 +11,7 @@ from discord.ext import commands
 import scraper
 
 load_dotenv()
-token = os.getenv('DISCORD_TOKEN')
+token = os.getenv('Discord-Token')
 
 bot = commands.Bot(command_prefix = '!')
 
