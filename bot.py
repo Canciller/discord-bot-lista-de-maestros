@@ -1,26 +1,33 @@
 import os
+import time
 import sys
+
+import requests
 
 import discord
 from dotenv import load_dotenv
 
+from discord.ext import commands
+
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
 
-client = discord.Client()
+bot = commands.Bot(command_prefix = '!')
 
-@client.event
+@bot.event
 async def on_ready():
-    print(client.guilds)
-    print(f'{client.user} has connected to Discord!')
+    print(f'{bot.user.name} has connected to Discord!')
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+@bot.command(name = 'yegua')
+async def command_yegua(ctx, *args):
+    await ctx.send(' '.join(args))
+
+@bot.event
+async def on_command_error(ctx, error):
+    print(error)
 
 try:
-    client.run(token)
+    bot.run(token)
 except discord.errors.LoginFailure as e:
     print('Login failure:', e)
     sys.exit(1)
