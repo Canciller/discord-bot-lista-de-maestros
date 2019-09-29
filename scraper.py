@@ -19,16 +19,23 @@ def scrap(name, url):
                 find('se_li')
                 ]
 
-        rates = [
-                find('chidos_score'),
-                find('gachos_score')
-                ]
+        chidos = find('chidos_score')
+        gachos = find('gachos_score')
+
+        maestro = {
+                'name' : name,
+                'url' : url
+                }
 
         for score in scores:
-            print(score.contents)
+            value = float(score.contents[0])
+            key = score.contents[1].text
+            maestro[key] = value;
 
-        for rate in rates:
-            print(rate.span.contents)
+        maestro['Chidos'] = int(chidos.span.text)
+        maestro['Gachos'] = int(gachos.span.text)
+
+        return maestro
 
 def find(name : str):
     if not name:
@@ -43,7 +50,7 @@ def find(name : str):
 
         table = soup.find(id = 'nombres_table')
         for link in table.find_all('a'):
-            maestro = scrap(link.contents, link['href'])
+            maestro = scrap(link.text, link['href'])
 
             result.append(maestro)
 
