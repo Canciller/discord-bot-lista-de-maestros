@@ -1,5 +1,5 @@
 # discord-bot-yegua-scraper
-Bot de discord que te muestra la información de maestros de FIME.
+Bot de Discord que te muestra informacion de Lista de Maestros de FIME.
 
 
 ![Lic. Santiago Neira Rosales](https://raw.githubusercontent.com/canciller/discord-bot-yegua-scraper/master/screenshots/sample_1.png)
