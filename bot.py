@@ -23,7 +23,6 @@ async def on_ready():
 async def command_yegua(ctx, *args):
     maestros = scraper.find('-'.join(args))
     if maestros:
-        message = []
         for maestro in maestros:
             await ctx.send(embed = maestro_embed(maestro))
 
