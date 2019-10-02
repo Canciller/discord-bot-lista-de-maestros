@@ -25,6 +25,8 @@ def log(path : str, message : str):
     except EnvironmentError as e:
         print(e)
 
+    print(message)
+
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
