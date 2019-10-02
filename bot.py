@@ -19,7 +19,7 @@ bot = commands.Bot(command_prefix = '!')
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
 
-@bot.command(name = 'yegua')
+@bot.command(name = 'maestro')
 async def command_yegua(ctx, *args):
     maestros = scraper.find('-'.join(args))
     if maestros:
