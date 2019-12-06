@@ -1,3 +1,3 @@
-from . import test
+from . import maestro
 
-TestCommmand = test.command
+MaestroCommand = maestro.command
