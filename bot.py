@@ -7,6 +7,7 @@ from discord.ext import commands
 
 import scraper
 import config
+from command import TestCommmand
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -17,6 +18,7 @@ handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)
 
 bot = commands.Bot(command_prefix=config.command_prefix)
+bot.add_command(TestCommmand)
 
 @bot.event
 async def on_ready():
