@@ -1,6 +1,5 @@
 # log
-error.log
-guild.log
+discord.log
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
