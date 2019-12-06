@@ -13,40 +13,14 @@ import scraper
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
 
-error_log = os.getenv('ERROR_LOG_PATH')
-guild_log = os.getenv('GUILD_LOG_PATH')
-
 bot = commands.Bot(command_prefix = '!')
-
-def log(path : str, message : str):
-    try:
-        with open(path, 'a') as file:
-            file.write(f'{message}\n')
-    except EnvironmentError as e:
-        print(e)
-
-    print(message)
 
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
 
-@bot.event
-async def on_guild_join(guild):
-    log(guild_log, f'[join] {guild}')
-
-@bot.event
-async def on_guild_remove(guild):
-    log(guild_log, f'[remove] {guild}')
-
-@bot.event
-async def on_guild_available(guild):
-    log(guild_log, f'[available] {guild}')
-
-
 @bot.command(name = 'maestro')
 async def command_yegua(ctx, *args):
-
     maestros = scraper.find('-'.join(args))
     if maestros:
         for maestro in maestros:
@@ -54,7 +28,6 @@ async def command_yegua(ctx, *args):
 
 @bot.event
 async def on_command_error(ctx, error):
-    log(error_log, error)
     print(error)
 
 def maestro_embed(maestro):
