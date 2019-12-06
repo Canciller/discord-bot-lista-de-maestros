@@ -3,7 +3,7 @@ from discord.ext import commands
 
 from . import scraper
 
-def maestro_embed(maestro):
+def embed(maestro):
     embed = discord.Embed(
             title = maestro['name'],
             url = maestro['url'],
@@ -24,6 +24,6 @@ async def function(ctx, *args):
     maestros = scraper.find('-'.join(args))
     if maestros:
         for maestro in maestros:
-            await ctx.send(embed = maestro_embed(maestro))
+            await ctx.send(embed = embed(maestro))
 
 command = commands.Command(function, name='maestro')
