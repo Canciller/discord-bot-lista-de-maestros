@@ -1,23 +1,26 @@
 #!/bin/python
-
-import os
 import sys
-
 import discord
-from dotenv import load_dotenv
+import logging
 
 from discord.ext import commands
 
 import scraper
+import config
 
-load_dotenv()
-token = os.getenv('DISCORD_TOKEN')
+logging.basicConfig(level=logging.DEBUG)
 
-bot = commands.Bot(command_prefix = '!')
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
+
+bot = commands.Bot(command_prefix=config.command_prefix)
 
 @bot.event
 async def on_ready():
-    print(f'{bot.user.name} has connected to Discord!')
+    logging.info(f'{bot.user.name} has connected to Discord!')
 
 @bot.command(name = 'maestro')
 async def command_yegua(ctx, *args):
@@ -49,7 +52,7 @@ def maestro_embed(maestro):
 
 def main():
     try:
-        bot.run(token)
+        bot.run(config.token)
     except discord.errors.LoginFailure as e:
         print('Login failure:', e)
         sys.exit(1)
