@@ -21,8 +21,45 @@ def __scrap_materia(materia : str, url : str):
         response = requests.get(url)
         if not response:
             return None
+
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        table = soup.table
+        if not table:
+            return None
+
+        horarios = []
+        for r in table.findAll('tr'):
+            h = []
+            for c in r.findAll('td'):
+                if len(c.text) > 0:
+                    h.append(c.text)
+            if len(h) > 0:
+                horarios.append(h)
+
+        return {
+                'name': materia,
+                'url': url,
+                'horarios': horarios
+                }
+
+    except Exception as e:
+        logging.error(e)
+
+def __scrap_materias(materia : str, url : str):
+    try:
+        response = requests.get(url)
+        if not response:
+            return None
+
         soup = BeautifulSoup(response.content, 'html.parser')
         materias = soup.findAll('li', { 'class': 'feature sombra-blanca' })
+
+        materia = materia.replace('1', 'I')
+        materia = materia.replace('2', 'II')
+        materia = materia.replace('3', 'III')
+        materia = materia.replace('4', 'IV')
+        materia = materia.replace('5', 'V')
 
         match = []
         for el in materias:
@@ -34,10 +71,13 @@ def __scrap_materia(materia : str, url : str):
             name = name.replace('ó', 'o')
             name = name.replace('ú', 'u')
 
-            match.append(fuzz.ratio(name.lower(), materia))
+            match.append(fuzz.ratio(name.lower(), materia.lower()))
 
-        url_materia = f'{url_horarios}{materias[match.index(max(match))].a["href"]}'
-        return url_materia
+        maxIndex = match.index(max(match))
+        materia = materias[maxIndex].text
+
+        url_materia = f'{url_horarios}{materias[maxIndex].a["href"]}'
+        return __scrap_materia(materia, url_materia)
 
     except Exception as e:
         logging.error(e)
@@ -57,7 +97,7 @@ def __scrap(materia : str, url : str):
                 url_materias = f'{url_horarios}{letra["href"]}'
                 break
 
-        return __scrap_materia(materia, url_materias)
+        return __scrap_materias(materia, url_materias)
     except Exception as e:
         logging.error(e)
 

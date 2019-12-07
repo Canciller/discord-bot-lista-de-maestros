@@ -8,11 +8,11 @@ from command import MaestroCommand, MateriaCommand
 
 import config
 
-logging.basicConfig(level=logging.DEBUG,
+logging.basicConfig(level=logging.INFO,
                     format=config.logging_format)
 
 logger = logging.getLogger('discord')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter(config.logging_format))
 logger.addHandler(handler)
