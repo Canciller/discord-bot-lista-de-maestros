@@ -12,5 +12,6 @@ async def function(ctx, *args):
                 color = 0x21ea1f)
 
         await ctx.send(embed=embed)
+        await ctx.send(file=discord.File('out-cropped.png'))
 
 command = commands.Command(function, name='materia')

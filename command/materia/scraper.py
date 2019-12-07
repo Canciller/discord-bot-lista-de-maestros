@@ -1,6 +1,8 @@
 import requests
 import logging
 from bs4 import BeautifulSoup
+import imgkit
+from PIL import Image
 from fuzzywuzzy import fuzz
 
 url_horarios = 'https://horarios.fime.me'
@@ -16,8 +18,13 @@ try:
 except Exception as e:
     logging.error(e)
 
+def __crop(image, coords, saved_location):
+    cropped_image = image.crop(coords)
+    cropped_image.save(saved_location)
+
 def __scrap_materia(materia : str, url : str):
     try:
+        """
         response = requests.get(url)
         if not response:
             return None
@@ -36,11 +43,17 @@ def __scrap_materia(materia : str, url : str):
                     h.append(c.text)
             if len(h) > 0:
                 horarios.append(h)
+        """
+
+        img = imgkit.from_url(url, 'out.png')
+        img = Image.open('out.png')
+        width, height = img.size
+
+        img = __crop(img, (0, 640, width, height-207), 'out-cropped.png')
 
         return {
                 'name': materia,
-                'url': url,
-                'horarios': horarios
+                'url': url
                 }
 
     except Exception as e:
