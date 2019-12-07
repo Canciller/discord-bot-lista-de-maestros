@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import imgkit
 from PIL import Image
 
+#test
 imgkit.from_url('https://horarios.fime.me/dependencia/2316/periodo/3376097/materias/c/maestros/455', 'out.jpg')
 
 def crop(image_path, coords, saved_location):
