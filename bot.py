@@ -4,7 +4,7 @@ import discord
 import logging
 
 from discord.ext import commands
-from command import MaestroCommand
+from command import MaestroCommand, MateriaCommand
 
 import config
 
@@ -18,7 +18,12 @@ handler.setFormatter(logging.Formatter(config.logging_format))
 logger.addHandler(handler)
 
 bot = commands.Bot(command_prefix=config.command_prefix)
-bot.add_command(MaestroCommand)
+
+def add_command(command):
+    bot.add_command(command)
+
+add_command(MaestroCommand)
+add_command(MateriaCommand)
 
 @bot.event
 async def on_ready():
