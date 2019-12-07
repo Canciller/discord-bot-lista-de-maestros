@@ -28,10 +28,10 @@ def main():
     try:
         bot.run(config.token)
     except discord.errors.LoginFailure as e:
-        logging.error('LoginFailure:', e)
+        logging.error(e)
         sys.exit(1)
     except Exception as e:
-        logging.error('Error:', e)
+        logging.error(e)
         sys.exit(1)
 
 if __name__ == "__main__":
