@@ -43,13 +43,13 @@ def __scrap_materia(materia : str, url : str):
                     h.append(c.text)
             if len(h) > 0:
                 horarios.append(h)
-        """
 
         img = imgkit.from_url(url, 'out.png')
         img = Image.open('out.png')
         width, height = img.size
 
         img = __crop(img, (0, 640, width, height-207), 'out-cropped.png')
+        """
 
         return {
                 'name': materia,
